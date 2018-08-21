@@ -114,15 +114,35 @@ public class General extends JFrame {
             }
             if (e.getSource() == bPlus) {
                 ClickSymbol("+");
+                // блокируем знаки
+                bPlus.setEnabled(false);
+                bMinus.setEnabled(false);
+                bMultiply.setEnabled(false);
+                bDivide.setEnabled(false);
             }
             if (e.getSource() == bMinus) {
                 ClickSymbol("-");
+                // блокируем знаки
+                bPlus.setEnabled(false);
+                bMinus.setEnabled(false);
+                bMultiply.setEnabled(false);
+                bDivide.setEnabled(false);
             }
             if (e.getSource() == bMultiply) {
                 ClickSymbol("*");
+                // блокируем знаки
+                bPlus.setEnabled(false);
+                bMinus.setEnabled(false);
+                bMultiply.setEnabled(false);
+                bDivide.setEnabled(false);
             }
             if (e.getSource() == bDivide) {
                 ClickSymbol("/");
+                // блокируем знаки
+                bPlus.setEnabled(false);
+                bMinus.setEnabled(false);
+                bMultiply.setEnabled(false);
+                bDivide.setEnabled(false);
             }
             if (e.getSource() == bEqually) {      // равно
                 try {
