@@ -125,66 +125,72 @@ public class General extends JFrame {
                 ClickSymbol("/");
             }
             if (e.getSource() == bEqually) {      // равно
-                // блокируем цифры
-                b1.setEnabled(false);
-                b2.setEnabled(false);
-                b3.setEnabled(false);
-                b4.setEnabled(false);
-                b5.setEnabled(false);
-                b6.setEnabled(false);
-                b7.setEnabled(false);
-                b8.setEnabled(false);
-                b9.setEnabled(false);
-                b0.setEnabled(false);
+                try {
+                    // блокируем цифры
+                    b1.setEnabled(false);
+                    b2.setEnabled(false);
+                    b3.setEnabled(false);
+                    b4.setEnabled(false);
+                    b5.setEnabled(false);
+                    b6.setEnabled(false);
+                    b7.setEnabled(false);
+                    b8.setEnabled(false);
+                    b9.setEnabled(false);
+                    b0.setEnabled(false);
 
-                // блокируем знаки
-                bPlus.setEnabled(false);
-                bMinus.setEnabled(false);
-                bMultiply.setEnabled(false);
-                bDivide.setEnabled(false);
+                    // блокируем знаки
+                    bPlus.setEnabled(false);
+                    bMinus.setEnabled(false);
+                    bMultiply.setEnabled(false);
+                    bDivide.setEnabled(false);
 
-                //переводим значенния в тип int
-                if (data[0] == "") {
-                    data[0] = "0";
-                }
-                if (data[2] == "") {
-                    data[2] = "0";
-                }
+                    //переводим значенния в тип int
+                    if (data[0] == "") {
+                        data[0] = "0";
+                    }
+                    if (data[2] == "") {
+                        data[2] = "0";
+                    }
 
-                int v1 = Integer.parseInt(data[0]);
-                int v2 = Integer.parseInt(data[2]);
-                float fv1 = (float) (v1);
-                float fv2 = (float) (v2);
+                    int v1 = Integer.parseInt(data[0]);
+                    int v2 = Integer.parseInt(data[2]);
+                    System.out.println(v1);
+                    float fv1 = (float) (v1);
+                    float fv2 = (float) (v2);
 
-                if (data[1] == "") {
-                    result = v1+v2;
-                }
-                if (data[1] == "+") {
-                    result = v1+v2;
-                }
-                if (data[1] == "-") {
-                    result = v1-v2;
-                }
-                if (data[1] == "*") {
-                    result = v1*v2;
-                }
-                if (data[1] == "/") {
+                    if (data[1] == "") {
+                        result = v1 + v2;
+                    }
+                    if (data[1] == "+") {
+                        result = v1 + v2;
+                    }
+                    if (data[1] == "-") {
+                        result = v1 - v2;
+                    }
+                    if (data[1] == "*") {
+                        result = v1 * v2;
+                    }
+                    if (data[1] == "/") {
                         fresult = fv1 / fv2;
                         runDivide = true;
                         if (fv1 == 0.0 && fv2 == 0.0) {
                             fresult = Float.POSITIVE_INFINITY;
                         }
-                }
-                if (runDivide == true) {
-                    if (fresult == Float.POSITIVE_INFINITY) {
-                        resultS = "Некорректные параметры деления";
-                    } else {
-                        resultS = "Итого = " + fresult;
                     }
-                } else {
-                    resultS = "Итого = " + result;
+                    if (runDivide == true) {
+                        if (fresult == Float.POSITIVE_INFINITY) {
+                            resultS = "Некорректные параметры деления";
+                        } else {
+                            resultS = "Итого = " + fresult;
+                        }
+                    } else {
+                        resultS = "Итого = " + result;
+                    }
+                    echo.setText(resultS);
+                } catch (Exception ignored) {
+                    resultS = "Введены некорректные параметры";
+                    echo.setText(resultS);
                 }
-                echo.setText(resultS);
             }
             if (e.getSource() == bClear) {
                 setVisible(false);
