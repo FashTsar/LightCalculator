@@ -154,7 +154,6 @@ public class General extends JFrame {
 
                     int v1 = Integer.parseInt(data[0]);
                     int v2 = Integer.parseInt(data[2]);
-                    System.out.println(v1);
                     float fv1 = (float) (v1);
                     float fv2 = (float) (v2);
 
