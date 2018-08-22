@@ -5,13 +5,13 @@ import java.awt.event.ActionListener;
 
 public class General extends JFrame {
 
-    JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b0, bPlus, bMinus, bMultiply, bDivide, bEqually, bClear;
+    JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b0, bPlusMinus, bPlus, bMinus, bMultiply, bDivide, bEqually, bClear;
     JTextArea echo = new JTextArea(null, "", 3, 20);
     String value = "";
     String[] data = new String[3];
     int i = 0, result;
     float fresult;
-    String resultS;
+    String resultS, symbolV;
     boolean clickSymbol = false, clickS = false, oneElement = false, runDivide = false;
 
     Calculat calk = new Calculat();
@@ -34,6 +34,7 @@ public class General extends JFrame {
         b8 = new JButton("8");
         b9 = new JButton("9");
         b0 = new JButton("0");
+        bPlusMinus = new JButton("+/-");
         bPlus = new JButton("+");
         bMinus = new JButton("-");
         bMultiply = new JButton("x");
@@ -55,6 +56,7 @@ public class General extends JFrame {
         add(b8);
         add(b9);
         add(b0);
+        add(bPlusMinus);
         add(bPlus);
         add(bMinus);
         add(bMultiply);
@@ -72,6 +74,7 @@ public class General extends JFrame {
         b8.addActionListener(calk);
         b9.addActionListener(calk);
         b0.addActionListener(calk);
+        bPlusMinus.addActionListener(calk);
         bPlus.addActionListener(calk);
         bMinus.addActionListener(calk);
         bMultiply.addActionListener(calk);
@@ -112,6 +115,52 @@ public class General extends JFrame {
             if (e.getSource() == b0) {
                 ClickNomber("0");
             }
+            if (e.getSource() == bPlusMinus) {
+                int vl1 = 0;
+                int vl2 = 0;
+                try {
+                    vl1 = Integer.parseInt(data[0]);
+                } catch (Exception ignore) {vl1 = 0;}
+                try {
+                    vl2 = Integer.parseInt(data[2]);
+                } catch (Exception ignore) {vl2 = 0;}
+                int val_1 = vl1*(-1);
+                int val_2 = vl2*(-1);
+                if (vl2 == 0) {
+                    value = "";
+                    data[0] = ""+val_1;
+                    echoVal(data[0]);
+                } else {
+                    if (symbolV == "+") {
+                        int index = value.indexOf("+") + 1;
+                        value = value.substring(0, index);
+                        //System.out.println(index);
+                        data[2] = "" + val_2;
+                        echoVal(data[2]);
+                    }
+                    if (symbolV == "-") {
+                        int index = value.indexOf("-") + 1;
+                        value = value.substring(0, index);
+                        //System.out.println(index);
+                        data[2] = "" + val_2;
+                        echoVal(data[2]);
+                    }
+                    if (symbolV == "*") {
+                        int index = value.indexOf("*") + 1;
+                        value = value.substring(0, index);
+                        //System.out.println(index);
+                        data[2] = "" + val_2;
+                        echoVal(data[2]);
+                    }
+                    if (symbolV == "/") {
+                        int index = value.indexOf("/") + 1;
+                        value = value.substring(0, index);
+                        //System.out.println(index);
+                        data[2] = "" + val_2;
+                        echoVal(data[2]);
+                    }
+                }
+            }
             if (e.getSource() == bPlus) {
                 ClickSymbol("+");
                 // блокируем знаки
@@ -119,6 +168,7 @@ public class General extends JFrame {
                 bMinus.setEnabled(false);
                 bMultiply.setEnabled(false);
                 bDivide.setEnabled(false);
+                symbolV = "+";
             }
             if (e.getSource() == bMinus) {
                 ClickSymbol("-");
@@ -127,6 +177,7 @@ public class General extends JFrame {
                 bMinus.setEnabled(false);
                 bMultiply.setEnabled(false);
                 bDivide.setEnabled(false);
+                symbolV = "-";
             }
             if (e.getSource() == bMultiply) {
                 ClickSymbol("*");
@@ -135,6 +186,7 @@ public class General extends JFrame {
                 bMinus.setEnabled(false);
                 bMultiply.setEnabled(false);
                 bDivide.setEnabled(false);
+                symbolV = "*";
             }
             if (e.getSource() == bDivide) {
                 ClickSymbol("/");
@@ -143,6 +195,7 @@ public class General extends JFrame {
                 bMinus.setEnabled(false);
                 bMultiply.setEnabled(false);
                 bDivide.setEnabled(false);
+                symbolV = "/";
             }
             if (e.getSource() == bEqually) {      // равно
                 try {
@@ -159,6 +212,7 @@ public class General extends JFrame {
                     b0.setEnabled(false);
 
                     // блокируем знаки
+                    bPlusMinus.setEnabled(false);
                     bPlus.setEnabled(false);
                     bMinus.setEnabled(false);
                     bMultiply.setEnabled(false);
@@ -197,7 +251,7 @@ public class General extends JFrame {
                         }
                     }
                     if (runDivide == true) {
-                        if (fresult == Float.POSITIVE_INFINITY) {
+                        if (fresult == Float.POSITIVE_INFINITY || fresult == Float.NEGATIVE_INFINITY) {
                             resultS = "Некорректные параметры деления";
                         } else {
                             resultS = "Итого = " + fresult;
@@ -234,9 +288,8 @@ public class General extends JFrame {
                 i = i + 1;
             }
             data[i] = data[i] + n;
-            value = value + n;
+            echoVal(n);
             clickSymbol = false;
-            echo.setText(value);
         }
 
         public void ClickSymbol(String n){  // действия
@@ -246,8 +299,12 @@ public class General extends JFrame {
             clickSymbol = true;
             clickS = true;
             oneElement = false;
-            value = value + n;
-            echo.setText(value);
+            echoVal(n);
         }
+    }
+
+    public void echoVal(String n){
+        value = value + n;
+        echo.setText(value);
     }
 }
